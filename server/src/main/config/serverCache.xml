@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cache xmlns="http://geode.apache.org/schema/cache" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd" version="1.0">
+	xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
+	version="1.0">
 
 	<disk-store name="pdx">
 		<disk-dirs>
@@ -22,15 +23,20 @@
 			<parameter name="classes">
 				<string>io.pivotal.gemfire.sample.app.entity.*</string>
 			</parameter>
+			<parameter name="check-portability">
+				<string>true</string>
+			</parameter>
 		</pdx-serializer>
 	</pdx>
 
 	<region name="Person">
-		<region-attributes refid="PARTITION_PERSISTENT" disk-store-name="data" />
-		<!--region-attributes refid="REPLICATE" /-->
+		<region-attributes refid="PARTITION_PERSISTENT"
+			disk-store-name="data" />
+		<!--region-attributes refid="REPLICATE" / -->
 	</region>
 
-    
-    <resource-manager eviction-heap-percentage="70" critical-heap-percentage="80" />
+
+	<resource-manager eviction-heap-percentage="70"
+		critical-heap-percentage="80" />
 
 </cache>

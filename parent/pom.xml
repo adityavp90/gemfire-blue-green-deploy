@@ -28,6 +28,7 @@
         <module>../server</module>
         <module>../app-blue</module>
         <module>../app-green</module>
+        <module>../functions</module>
     </modules>
 
 
