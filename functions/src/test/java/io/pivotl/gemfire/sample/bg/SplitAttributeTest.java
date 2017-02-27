@@ -16,6 +16,7 @@ import org.junit.Test;
 import io.pivotal.gemfire.sample.temp.entity.Person;
 import junit.framework.TestCase;
 
+
 /**
  * Unit test for simple App.
  */
@@ -37,12 +38,12 @@ public class SplitAttributeTest extends TestCase {
 
 	public void executeSplitAttributeFucntion(Region personRegion) {
 		Execution execution = FunctionService.onRegion(personRegion);		
-		ResultCollector collector = execution.execute("SplitAttributeFunction");
-		List<String> regionResults = (List<String>) collector.getResult();
-		System.out.println("Entries for region: " + personRegion.getName());
-		for (String entry : regionResults) {
-			System.out.println(" - " + entry);
-		}
+//		ResultCollector collector = execution.execute("SplitAttributeFunction");
+//		List<String> regionResults = (List<String>) collector.getResult();
+//		System.out.println("Entries for region: " + personRegion.getName());
+//		for (String entry : regionResults) {
+//			System.out.println(" - " + entry);
+//		}
 	}
 
 	private void getCache() {
