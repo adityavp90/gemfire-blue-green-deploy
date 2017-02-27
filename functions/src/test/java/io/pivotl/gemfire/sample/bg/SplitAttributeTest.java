@@ -38,12 +38,7 @@ public class SplitAttributeTest extends TestCase {
 
 	public void executeSplitAttributeFucntion(Region personRegion) {
 		Execution execution = FunctionService.onRegion(personRegion);		
-//		ResultCollector collector = execution.execute("SplitAttributeFunction");
-//		List<String> regionResults = (List<String>) collector.getResult();
-//		System.out.println("Entries for region: " + personRegion.getName());
-//		for (String entry : regionResults) {
-//			System.out.println(" - " + entry);
-//		}
+		execution.execute("SplitAttributeFunction");	
 	}
 
 	private void getCache() {

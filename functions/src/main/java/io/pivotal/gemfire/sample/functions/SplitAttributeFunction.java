@@ -12,7 +12,6 @@ import org.apache.geode.cache.execute.RegionFunctionContext;
 import org.apache.geode.cache.partition.PartitionRegionHelper;
 import org.apache.geode.pdx.PdxInstance;
 import org.apache.geode.pdx.PdxInstanceFactory;
-import org.apache.geode.pdx.WritablePdxInstance;
 import org.apache.geode.pdx.internal.PdxField;
 import org.apache.geode.pdx.internal.PdxInstanceImpl;
 
@@ -25,14 +24,13 @@ public class SplitAttributeFunction implements Function {
 
 		Cache c = (Cache) r.getRegionService();
 		Set<Integer> regionKeys = r.keySet();
-//		List<Integer> list = new ArrayList<Integer>(regionKeys);
-//		PdxInstance instance = (PdxInstance) r.get(list.get(0));
-		
 		for (Object o : regionKeys) {
 			PdxInstance instance = (PdxInstance) r.get(o);
 			PdxInstanceFactory factory = c.createPdxInstanceFactory(instance.getClassName());
 			PdxInstanceImpl impl = (PdxInstanceImpl) instance;
+			
 			String name = (String) instance.getField("name");
+			
 			for (PdxField field : impl.getPdxType().getFields()) {
 				String fieldName = field.getFieldName();
 				Object fieldValue = instance.getField(fieldName);
@@ -51,10 +49,11 @@ public class SplitAttributeFunction implements Function {
 				}
 			}
 
-			factory.writeString("fistName", name.split(" ")[0]);
+			factory.writeString("firstName", name.split(" ")[0]);
 			factory.writeString("lastName", name.split(" ")[1]);
 			PdxInstance newInstance = factory.create();
 			r.put(instance.getField("id"), newInstance);
+
 		}		
 		
 	}
