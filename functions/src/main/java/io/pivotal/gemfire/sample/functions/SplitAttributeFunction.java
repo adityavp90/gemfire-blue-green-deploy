@@ -5,18 +5,25 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.geode.cache.Cache;
+import org.apache.geode.cache.CacheFactory;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.execute.Function;
 import org.apache.geode.cache.execute.FunctionContext;
 import org.apache.geode.cache.execute.RegionFunctionContext;
 import org.apache.geode.cache.partition.PartitionRegionHelper;
+import org.apache.geode.internal.logging.LogService;
 import org.apache.geode.pdx.PdxInstance;
 import org.apache.geode.pdx.PdxInstanceFactory;
 import org.apache.geode.pdx.internal.PdxField;
 import org.apache.geode.pdx.internal.PdxInstanceImpl;
+import org.apache.logging.log4j.Logger;
 
+
+@SuppressWarnings("rawtypes")
 public class SplitAttributeFunction implements Function {
-
+	
+	private static final Logger logger = LogService.getLogger();
+	
 	@Override
 	public void execute(FunctionContext fc) {
 		RegionFunctionContext rfc = (RegionFunctionContext) fc;

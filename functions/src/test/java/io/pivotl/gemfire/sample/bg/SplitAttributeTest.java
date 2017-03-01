@@ -1,7 +1,5 @@
 package io.pivotl.gemfire.sample.bg;
 
-import java.util.List;
-
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
@@ -9,7 +7,6 @@ import org.apache.geode.cache.client.ClientRegionFactory;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.execute.Execution;
 import org.apache.geode.cache.execute.FunctionService;
-import org.apache.geode.cache.execute.ResultCollector;
 import org.apache.geode.pdx.ReflectionBasedAutoSerializer;
 import org.junit.Test;
 
@@ -20,6 +17,7 @@ import junit.framework.TestCase;
 /**
  * Unit test for simple App.
  */
+@SuppressWarnings("rawtypes")
 public class SplitAttributeTest extends TestCase {
 
 	private ClientCache cache;
