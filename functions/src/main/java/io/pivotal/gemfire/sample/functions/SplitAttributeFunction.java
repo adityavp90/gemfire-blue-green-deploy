@@ -37,7 +37,7 @@ public class SplitAttributeFunction implements Function {
 			PdxInstanceImpl impl = (PdxInstanceImpl) instance;
 			
 			String name = (String) instance.getField("name");
-			
+				
 			for (PdxField field : impl.getPdxType().getFields()) {
 				String fieldName = field.getFieldName();
 				Object fieldValue = instance.getField(fieldName);

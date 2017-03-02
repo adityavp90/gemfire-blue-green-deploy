@@ -7,6 +7,8 @@ start server --name=server1 --server-port=0 --initial-heap=100m --max-heap=100m 
 
 connect --locator=localhost[41111]
 deploy --jar=../../functions/target/functions-1.0-SNAPSHOT.jar
-alter region --name=/Person --cache-listener=io.pivotal.gemfire.sample.listeners.AttributeSyncListener
+
+#alter region --name=/Person --cache-writer=io.pivotal.gemfire.sample.cachewriter.AttributeSyncCacheWriter
+#change loglevel --loglevel=fine --members=server1
 
 EOF

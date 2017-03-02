@@ -27,14 +27,13 @@ public class SplitAttributeTest extends TestCase {
 	
 	@Test
 	public void testFunctionCall() {
-		System.out.println("In Before");
 		getCache();
 		getRegion();
-		System.out.println("In Test Attribute");
 		executeSplitAttributeFucntion(personRegion);
 	}
 
 	public void executeSplitAttributeFucntion(Region personRegion) {
+		System.out.println("Executing Function:");
 		Execution execution = FunctionService.onRegion(personRegion);		
 		execution.execute("SplitAttributeFunction");	
 	}
