@@ -23,46 +23,58 @@ import org.apache.logging.log4j.Logger;
 public class SplitAttributeFunction implements Function {
 	
 	private static final Logger logger = LogService.getLogger();
+	private Cache cache;
 	
 	@Override
 	public void execute(FunctionContext fc) {
 		RegionFunctionContext rfc = (RegionFunctionContext) fc;
 		Region r = PartitionRegionHelper.getLocalDataForContext(rfc);
 
-		Cache c = (Cache) r.getRegionService();
+		this.cache = (Cache) r.getRegionService();
 		Set<Integer> regionKeys = r.keySet();
 		for (Object o : regionKeys) {
 			PdxInstance instance = (PdxInstance) r.get(o);
-			PdxInstanceFactory factory = c.createPdxInstanceFactory(instance.getClassName());
-			PdxInstanceImpl impl = (PdxInstanceImpl) instance;
 			
-			String name = (String) instance.getField("name");
-				
-			for (PdxField field : impl.getPdxType().getFields()) {
-				String fieldName = field.getFieldName();
-				Object fieldValue = instance.getField(fieldName);
-				switch (field.getFieldType()) {
-				case STRING:
-					factory.writeString(fieldName, (String) fieldValue);
-					break;
-				case INT:
-					factory.writeInt(fieldName, (int) fieldValue);
-					break;
-				case DOUBLE:
-					factory.writeDouble(fieldName, (double) fieldValue);
-					break;
-				default:
-					factory.writeObject(fieldName, fieldValue);
-				}
+			if(instance.getField("firstName") == null || (instance.getField("lastName") == null)){
+				PdxInstance newInstance = updatePdxInstance(instance);
+				r.put(newInstance.getField("id"), newInstance);
 			}
-
-			factory.writeString("firstName", name.split(" ")[0]);
-			factory.writeString("lastName", name.split(" ")[1]);
-			PdxInstance newInstance = factory.create();
-			r.put(instance.getField("id"), newInstance);
 
 		}		
 		
+	}
+	
+	private PdxInstance updatePdxInstance(PdxInstance instance){
+		PdxInstanceFactory factory = this.cache.createPdxInstanceFactory(instance.getClassName());
+		PdxInstanceImpl impl = (PdxInstanceImpl) instance;
+		
+		String name = (String) instance.getField("name");
+			
+		for (PdxField field : impl.getPdxType().getFields()) {
+			String fieldName = field.getFieldName();
+			Object fieldValue = instance.getField(fieldName);
+			switch (field.getFieldType()) {
+			case STRING:
+				factory.writeString(fieldName, (String) fieldValue);
+				break;
+			case INT:
+				factory.writeInt(fieldName, (int) fieldValue);
+				break;
+			case DOUBLE:
+				factory.writeDouble(fieldName, (double) fieldValue);
+				break;
+			default:
+				factory.writeObject(fieldName, fieldValue);
+			}
+		}
+		if(instance.getField("firstName")==null){
+			factory.writeString("firstName", name.split(" ")[0]);
+		}
+		if(instance.getField("lastName")==null){
+			factory.writeString("lastName", name.split(" ")[1]);
+		}
+		PdxInstance newInstance = factory.create();
+		return newInstance;
 	}
 
 	@Override
