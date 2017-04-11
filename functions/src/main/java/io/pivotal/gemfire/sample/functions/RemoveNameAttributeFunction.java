@@ -52,7 +52,6 @@ public class RemoveNameAttributeFunction implements Function {
 			
 		for (PdxField field : impl.getPdxType().getFields()) {
 			String fieldName = field.getFieldName();
-			logger.error("Field: " + fieldName);
 			if(!fieldName.equals("name")){
 				Object fieldValue = instance.getField(fieldName);
 				switch (field.getFieldType()) {

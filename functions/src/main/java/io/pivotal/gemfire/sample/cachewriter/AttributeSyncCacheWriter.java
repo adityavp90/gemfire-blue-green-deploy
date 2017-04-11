@@ -21,16 +21,14 @@ public class AttributeSyncCacheWriter extends CacheWriterAdapter<Integer, Person
 	private static String RECURSING = "recursing";
 
 	public void beforeCreate(EntryEvent event) {
-		this.cache = (Cache) event.getRegion().getRegionService();
-		if(FunctionService.isRegistered("EventModifierFunction")){
-			Execution execution = FunctionService.onRegion(event.getRegion()).withArgs(event);		
-			ResultCollector collector = execution.execute("EventModifierFunction");
-			List<EntryEvent> regionResults = (List<EntryEvent>) collector.getResult();
-			event = regionResults.get(0);
-		}
+		executeEventModifier(event);
 	}
 
 	public void beforeUpdate(EntryEvent event) {
+		executeEventModifier(event);
+	}
+	
+	private void executeEventModifier(EntryEvent event){
 		this.cache = (Cache) event.getRegion().getRegionService();
 		if(FunctionService.isRegistered("EventModifierFunction")){
 			Execution execution = FunctionService.onRegion(event.getRegion()).withArgs(event);		

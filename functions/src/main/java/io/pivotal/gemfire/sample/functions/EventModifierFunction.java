@@ -44,10 +44,6 @@ public class EventModifierFunction implements Function {
 
 		EntryEventImpl eei = (EntryEventImpl) event;
 		PdxInstanceImpl impl = (PdxInstanceImpl) event.getNewValue();
-		if (impl.getField("name") != null) {
-			if (impl.getField("firstName") != null || (impl.getField("lastName") != null)) {
-				return event;
-			}
 			PdxInstanceFactory factory = this.cache.createPdxInstanceFactory(impl.getClassName());
 
 			for (PdxField field : impl.getPdxType().getFields()) {
@@ -80,7 +76,6 @@ public class EventModifierFunction implements Function {
 
 			eei.setNewValue(updatedInstance);
 			eei.makeSerializedNewValue();
-		}
 		return eei;
 	}
 
