@@ -11,17 +11,18 @@ We will be using a CacheWriter and server-side function for the migration.
 Read [here](https://docs.google.com/document/d/1zmsoOjleRIi1Ls14mfi_SFK1v5oDtFt0PeQWsRim0gY) for more information.
 
 ## Running the Demo:
-Start the Gemfire cluster by running the 'startCluster.sh' script from the /server/scripts directory
+Start the Gemfire cluster by running the `./startCluster.sh` script from the /server/scripts directory
 
 Start both applications (blue-app, green-app) from their respective folders using:
 <br/>
-mvn spring-boot:run
+`mvn spring-boot:run`
 
 The /functions/demo-run.sh shell-script does a step by step run-through of the demo. Run it from the 'functions' folder:
+`./demo-run.sh`
 
-To stop the Gemfire Cluster and clean directory. This script removes the /server and /locator folders from the directory:
+Use the script /server/scripts/stopCluster.sh to stop the Gemfire Cluster and clean directory. This script also removes the /server and /locator folders from the directory:
 <br/>
-/server/scripts/stopCluster.sh
+`./stopCluster.sh`
 
 <img src="screenshots/process.gif?raw=true">
 
