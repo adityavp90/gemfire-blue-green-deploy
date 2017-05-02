@@ -33,7 +33,7 @@ mvn -Dtest=SplitAttributeTest test | grep Function
 echo ""
 mvn -Dtest=EntryListingTest test | grep PDX
 
-printf "### At this point we can switch to the green-app. Any new data added from the green-app will have all 3 fields as well as the CacheWriter is still active.\n"
+printf "### At this point we can switch to the green-app. Any new data added from the green-app will have all 3 fields as long as the CacheWriter is still active.\n"
 curl -X PUT localhost:8081/person/5
 curl -X PUT localhost:8081/person/6
 
@@ -41,10 +41,11 @@ echo ""
 mvn -Dtest=EntryListingTest test | grep PDX
 echo ""
 
-printf "### Now that the migration is complete, we can get rid of the cache-writer. This can be achieved by unregistering the function it's invoking\n"
+printf "### Now that the migration is complete, we can get rid of the cache-writer. This can be achieved by unregistering the cache-writer or the function it's invoking\n"
 gfsh <<EOF
 connect --locator=localhost[41111]
-destroy function --id=EventModifierFunction --member=server1
+#destroy function --id=EventModifierFunction --member=server1
+alter region --name=/Person --cache-writer=""
 EOF
 
 printf "### Invoke function to remove the name field from all objects in the database.\n"

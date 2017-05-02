@@ -17,7 +17,7 @@ Start both applications (blue-app, green-app) from their respective folders usin
 <br/>
 `mvn spring-boot:run`
 
-The /functions/demo-run.sh shell-script does a step by step run-through of the demo. Run it from the 'functions' folder:
+The /functions/demo-run.sh shell-script does a step by step run-through of the demo (with comments explaining each step). Run it from the 'functions' folder:
 `./demo-run.sh`
 
 Use the script /server/scripts/stopCluster.sh to stop the Gemfire Cluster and clean directory. This script also removes the /server and /locator folders from the directory:
