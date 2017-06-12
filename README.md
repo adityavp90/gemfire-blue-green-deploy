@@ -6,12 +6,15 @@ This example shows migration from blue-app (old version) to green-app (new versi
 When migrating from the blue-app to green-app, the Person class undergoes a change. The original version uses a single attribute (“name”) to capture a person’s full name. The new version of the application instead captures a person’s first and last name separately, using the attributes  firstName and lastName.
 For example: 'name:John Doe' becomes 'firstName:John' and 'lastName:Doe' in the new version.
 
+## Prerequisites
+Gemfire with `gfsh` on env PATH
+Apache Mave to run the Client Spring Applications  
 
 We will be using a CacheWriter and server-side function for the migration.
 Read [here](https://docs.google.com/document/d/1zmsoOjleRIi1Ls14mfi_SFK1v5oDtFt0PeQWsRim0gY) for more information.
 
 ## Running the Demo:
-Start the Gemfire cluster by running the `./startCluster.sh` script from the /server/scripts directory
+Start the Gemfire cluster by running the `./startCluster.sh` script from the /server/scripts directory. Run the command from the folder itself.
 
 Start both applications (app-blue/, app-green/) from their respective folders using:
 <br/>
