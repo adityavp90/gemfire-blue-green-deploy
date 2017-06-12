@@ -7,7 +7,7 @@ When migrating from the blue-app to green-app, the Person class undergoes a chan
 For example: 'name:John Doe' becomes 'firstName:John' and 'lastName:Doe' in the new version.
 
 ## Prerequisites
-Gemfire with `gfsh` on env PATH
+Gemfire with `gfsh` on env PATH  
 Apache Mave to run the Client Spring Applications  
 
 We will be using a CacheWriter and server-side function for the migration.
