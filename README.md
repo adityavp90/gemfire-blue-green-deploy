@@ -8,7 +8,7 @@ For example: 'name:John Doe' becomes 'firstName:John' and 'lastName:Doe' in the 
 
 ## Prerequisites
 Gemfire with `gfsh` on env PATH  
-Apache Mave to run the Client Spring Applications  
+Apache Maven to run the Client Spring Applications  
 
 We will be using a CacheWriter and server-side function for the migration.
 Read [here](https://docs.google.com/document/d/1zmsoOjleRIi1Ls14mfi_SFK1v5oDtFt0PeQWsRim0gY) for more information.
