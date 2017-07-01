@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.pivotal.gemfire.sample.app.entity.Person;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = {io.pivotal.gemfire.sample.app.config.ClientCacheConfiguration.class})
 public class ClientApplicationTests {
 
 	@Autowired 

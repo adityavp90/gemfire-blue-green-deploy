@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Interesting the deploy code is hiding some miss behavior I should have to setup a classpath for the event handlers
+
 gfsh <<EOF
 start locator --name=locator1 --initial-heap=100m --max-heap=100m --log-level=warning --cache-xml-file=../src/main/config/serverCache.xml --locators=localhost[41111] --mcast-port=0 --bind-address=127.0.0.1 --port=41111
 

@@ -1,5 +1,6 @@
 package io.pivotl.gemfire.sample.bg;
 
+import junit.framework.TestCase;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
@@ -7,11 +8,7 @@ import org.apache.geode.cache.client.ClientRegionFactory;
 import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.execute.Execution;
 import org.apache.geode.cache.execute.FunctionService;
-import org.apache.geode.pdx.ReflectionBasedAutoSerializer;
 import org.junit.Test;
-
-import io.pivotal.gemfire.sample.temp.entity.Person;
-import junit.framework.TestCase;
 
 
 /**
@@ -20,41 +17,42 @@ import junit.framework.TestCase;
 @SuppressWarnings("rawtypes")
 public class RemoveNameAttributeTest extends TestCase {
 
-	private ClientCache cache;
-	private String locatorHost = "localhost";
-	private Integer locatorPort = 41111;
-	private Region<Integer, Person> personRegion;
-	
-	@Test
-	public void testFunctionCall() {
-		getCache();
-		getRegion();
-		executeSplitAttributeFucntion(personRegion);
-	}
+    private ClientCache cache;
+    private String locatorHost = "localhost";
+    private Integer locatorPort = 41111;
+    private Region personRegion;
 
-	public void executeSplitAttributeFucntion(Region personRegion) {
-		System.out.println("Executing Function:");
-		Execution execution = FunctionService.onRegion(personRegion);		
-		execution.execute("RemoveNameAttributeFunction");	
-	}
+    @Test
+    public void testFunctionCall() {
+        getCache();
+        getRegion();
+        executeSplitAttributeFucntion(personRegion);
+    }
 
-	private void getCache() {
-		ClientCacheFactory ccf = new ClientCacheFactory();
+    public void executeSplitAttributeFucntion(Region personRegion) {
+        System.out.println("Executing Function:");
+        Execution execution = FunctionService.onRegion(personRegion);
+        execution.execute("RemoveNameAttributeFunction");
+    }
 
-		ccf.addPoolLocator(locatorHost, locatorPort);
+    private void getCache() {
+        ClientCacheFactory ccf = new ClientCacheFactory();
 
-		ccf.setPdxPersistent(true);
-		ccf.setPdxReadSerialized(false);
-		ccf.setPdxSerializer(new ReflectionBasedAutoSerializer("io.pivotal.gemfire.sample.temp.entity.*"));
+        ccf.addPoolLocator(locatorHost, locatorPort);
 
-		this.cache = ccf.create();
-		System.out.println(this.cache.getName());
-	}
+        ccf.setPdxPersistent(true);
+        ccf.setPdxReadSerialized(true);
 
-	private void getRegion() {
-		ClientRegionFactory<Integer, Person> crf = cache.createClientRegionFactory(ClientRegionShortcut.PROXY);
-		this.personRegion = crf.create("Person");
+        this.cache = ccf.create();
+        System.out.println(this.cache.getName());
+    }
 
-	}
+    private void getRegion() {
+        personRegion = cache.getRegion("Person");
+        if (personRegion == null) {
+            ClientRegionFactory crf = cache.createClientRegionFactory(ClientRegionShortcut.PROXY);
+            personRegion = crf.create("Person");
+        }
+    }
 
 }

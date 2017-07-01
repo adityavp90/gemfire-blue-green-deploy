@@ -21,7 +21,8 @@ vf.gf.dmn-license.cfg
 ######################
 # Directories #
 ######################
-
+server/scripts/server1
+server/scripts/locator1
 /build/
 bin/
 repos/

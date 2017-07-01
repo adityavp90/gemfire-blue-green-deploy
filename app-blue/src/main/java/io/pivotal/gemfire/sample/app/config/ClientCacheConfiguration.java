@@ -37,6 +37,7 @@ public class ClientCacheConfiguration {
 
         ccf.setPdxPersistent(true);
         ccf.setPdxReadSerialized(false);
+        ccf.setPdxIgnoreUnreadFields(true);
         ccf.setPdxSerializer(new ReflectionBasedAutoSerializer("io.pivotal.gemfire.sample.app.entity.*"));
 
         return ccf.create();

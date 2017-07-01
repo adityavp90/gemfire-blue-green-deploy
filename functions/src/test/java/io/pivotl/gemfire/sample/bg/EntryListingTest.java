@@ -1,7 +1,6 @@
 package io.pivotl.gemfire.sample.bg;
 
-import java.util.List;
-
+import junit.framework.TestCase;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
@@ -11,57 +10,53 @@ import org.apache.geode.cache.execute.Execution;
 import org.apache.geode.cache.execute.FunctionService;
 import org.apache.geode.cache.execute.ResultCollector;
 import org.apache.geode.pdx.ReflectionBasedAutoSerializer;
-import org.junit.Test;
 
-import io.pivotal.gemfire.sample.temp.entity.Person;
-import junit.framework.TestCase;
+import java.util.List;
 
 /**
  * Unit test for simple App.
  */
 public class EntryListingTest extends TestCase {
 
-	private ClientCache cache;
-	private String locatorHost = "localhost";
-	private Integer locatorPort = 41111;
-	private Region<Integer, Person> personRegion;
+    private ClientCache cache;
+    private String locatorHost = "localhost";
+    private Integer locatorPort = 41111;
+    private Region personRegion;
 
-	@Test
-	public void testFunctionCall() {
-		System.out.println("In Before");
-		getCache();
-		getRegion();
-		System.out.println("In Test");
-		executeEntryListingFucntion(personRegion);
-	}
+    //@Test
+    public void testFunctionCall() {
+        System.out.println("In Before");
+        getCache();
+        getRegion();
+        System.out.println("In Test");
+        executeEntryListingFucntion(personRegion);
+    }
 
-	public void executeEntryListingFucntion(Region personRegion) {
-		Execution execution = FunctionService.onRegion(personRegion);
-		ResultCollector collector = execution.execute("EntryListingFunction");
-		List<String> regionResults = (List<String>) collector.getResult();
-		System.out.println("Entries for region: " + personRegion.getName());
-		for (String entry : regionResults) {
-			System.out.println(" - " + entry);
-		}
-	}
+    public void executeEntryListingFucntion(Region personRegion) {
+        Execution execution = FunctionService.onRegion(personRegion);
+        ResultCollector collector = execution.execute("EntryListingFunction");
+        List<String> regionResults = (List<String>) collector.getResult();
+        System.out.println("Entries for region: " + personRegion.getName());
+        for (String entry : regionResults) {
+            System.out.println(" - " + entry);
+        }
+    }
 
-	private void getCache() {
-		ClientCacheFactory ccf = new ClientCacheFactory();
+    private void getCache() {
+        ClientCacheFactory ccf = new ClientCacheFactory();
+        ccf.addPoolLocator(locatorHost, locatorPort);
 
-		ccf.addPoolLocator(locatorHost, locatorPort);
+        ccf.setPdxPersistent(true);
+        ccf.setPdxReadSerialized(true);
 
-		ccf.setPdxPersistent(true);
-		ccf.setPdxReadSerialized(false);
-		ccf.setPdxSerializer(new ReflectionBasedAutoSerializer("io.pivotal.gemfire.sample.app.entity.*"));
+        this.cache = ccf.create();
+        System.out.println(this.cache.getName());
+    }
 
-		this.cache = ccf.create();
-		System.out.println(this.cache.getName());
-	}
+    private void getRegion() {
+        ClientRegionFactory crf = cache.createClientRegionFactory(ClientRegionShortcut.PROXY);
+        this.personRegion = crf.create("Person");
 
-	private void getRegion() {
-		ClientRegionFactory<Integer, Person> crf = cache.createClientRegionFactory(ClientRegionShortcut.PROXY);
-		this.personRegion = crf.create("Person");
-
-	}
+    }
 
 }
