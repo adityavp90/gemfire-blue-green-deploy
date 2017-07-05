@@ -10,12 +10,14 @@ import org.apache.geode.cache.execute.Execution;
 import org.apache.geode.cache.execute.FunctionService;
 import org.apache.geode.cache.execute.ResultCollector;
 import org.apache.geode.pdx.ReflectionBasedAutoSerializer;
+import org.junit.Ignore;
 
 import java.util.List;
 
 /**
  * Unit test for simple App.
  */
+@Ignore
 public class EntryListingTest extends TestCase {
 
     private ClientCache cache;

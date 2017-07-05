@@ -1,5 +1,6 @@
 package io.pivotal.gemfire.sample.app.config;
 
+import io.pivotal.gemfire.sample.app.serialization.PersonPdxSerializer;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
@@ -38,7 +39,7 @@ public class ClientCacheConfiguration {
         ccf.setPdxPersistent(true);
         ccf.setPdxReadSerialized(false);
         ccf.setPdxIgnoreUnreadFields(true);
-        ccf.setPdxSerializer(new ReflectionBasedAutoSerializer("io.pivotal.gemfire.sample.app.entity.*"));
+        ccf.setPdxSerializer(new PersonPdxSerializer());
 
         return ccf.create();
     }

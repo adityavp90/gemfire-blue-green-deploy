@@ -8,6 +8,12 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>multi</name>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.4.3.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
     <modules>
         <module>app-blue</module>
         <module>app-green</module>

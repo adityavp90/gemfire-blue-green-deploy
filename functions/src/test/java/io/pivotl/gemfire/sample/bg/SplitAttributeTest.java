@@ -9,6 +9,7 @@ import org.apache.geode.cache.client.ClientRegionShortcut;
 import org.apache.geode.cache.execute.Execution;
 import org.apache.geode.cache.execute.FunctionService;
 import org.apache.geode.pdx.ReflectionBasedAutoSerializer;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -16,6 +17,7 @@ import org.junit.Test;
  * Unit test for simple App.
  */
 @SuppressWarnings("rawtypes")
+@Ignore
 public class SplitAttributeTest extends TestCase {
 
     private ClientCache cache;
