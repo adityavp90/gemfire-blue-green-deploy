@@ -11,7 +11,7 @@ Gemfire with `gfsh` on env PATH
 Apache Maven to run the Client Spring Applications  
 
 We will be using a CacheWriter and server-side function for the migration.
-Read [here](https://docs.google.com/document/d/1zmsoOjleRIi1Ls14mfi_SFK1v5oDtFt0PeQWsRim0gY) for more information.
+Read [here](docs/Blue-Green_Application_Deployment_w_GemFire.pdf) for more information.
 
 ## Running the Demo:
 Start the Gemfire cluster by running the `./startCluster.sh` script from the /server/scripts directory. Run the command from the folder itself.
